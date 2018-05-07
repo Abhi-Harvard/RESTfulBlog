@@ -8,3 +8,14 @@ npm install express mongoose body-parser ejs --save
 -> Specifying the ports and IP to listen on and console.log when the server gets started.
 -> testing my creating in app.js
 
+-> creating index page, header, footer
+-> Header -> cdns, external CSS, Navbar
+-> footer -> scripts
+=================get method=======================
+-> index -> rendered iterating all blogs, creating read more anchor tag which redirects to show template taking the id of the blog
+
+=================get method with id===============
+-> show template gives the detailed view of the blog
+
+=================get and post method==============to create a new post=========
+-> new template -> through get method -> it contains form through which all blog details are submitted and stored using POST method on clicking submit method

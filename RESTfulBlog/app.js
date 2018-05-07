@@ -23,7 +23,7 @@ var Blog = mongoose.model("Blog", blogSchema);
 app.get("/", function(req, res){
 	res.render("index");
 }); 
-
+//===================================================
 //	INDEX ROUTE
 app.get("/blogs", function(req, res){
 	Blog.find({}, function(err, blogs){
@@ -35,7 +35,7 @@ app.get("/blogs", function(req, res){
 		}
 	});
 }); 
-
+//===================================================
 //	NEW ROUTE
 app.get("/blogs/new", function(req, res){
 	res.render("new");
@@ -53,7 +53,7 @@ app.post("/blogs",function(req, res){
 		}
 	});
 });
-
+//===================================================
 //	SHOW ROUTE
 app.get("/blogs/:id", function(req, res){
 	Blog.findById(req.params.id, function(err, foundBlog){
@@ -64,6 +64,7 @@ app.get("/blogs/:id", function(req, res){
 		}
 	})
 });
+//===================================================
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
 	console.log("Server is running!!");
