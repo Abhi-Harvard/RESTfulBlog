@@ -1,0 +1,10 @@
+npm init
+npm install express mongoose body-parser ejs --save
+
+================writing app.js =====================
+-> including all dependencies
+-> configuring mongoose, body-parser, ejs, express
+-> writing the schema
+-> Specifying the ports and IP to listen on and console.log when the server gets started.
+-> testing my creating in app.js
+
