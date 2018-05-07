@@ -40,6 +40,30 @@ app.get("/blogs", function(req, res){
 app.get("/blogs/new", function(req, res){
 	res.render("new");
 }); 
+ 
+//	CREATE ROUTE
+app.post("/blogs",function(req, res){
+	//	create blog
+	Blog.create(req.body.blog, function(err, newBlog){	//.blog contains all title, image, body since name specified  in form in that manner
+		if(err){
+			res.render("new");
+		}	else{
+			//	then redirect to index
+			res.redirect("/blogs");
+		}
+	});
+});
+
+//	SHOW ROUTE
+app.get("/blogs/:id", function(req, res){
+	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err){
+			res.redirect("/blogs");
+		}	else{
+			res.render("show", {blog: foundBlog});	//to show template we are sending blog as a parameter which contains blog id caught by foundBlog
+		}
+	})
+});
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
 	console.log("Server is running!!");
