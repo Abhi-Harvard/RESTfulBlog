@@ -23,3 +23,5 @@ npm install express mongoose body-parser ejs --save
 ====================================================================
 -> edit page -> get method -> get the data and show it in the form
 method overridding -> post method overridded as PUT -> npm install method-override --save
+
+-> findByIdAndUpdate -> gets the page and updates the data in the database using the put request by changing wrt to the id

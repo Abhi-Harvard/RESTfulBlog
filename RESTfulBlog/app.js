@@ -1,13 +1,17 @@
 //including the dependencies
-var express = require('express'),
-bodyParser 	= require("body-parser"),
+var bodyParser 	= require("body-parser"),
+methodOverride	= require("method-override"),
+express = require('express'),
 mongoose 	= require("mongoose"),
 app 		= express();
 
+
+//=================tell the app to use the following==============
 app.set("view engine","ejs");
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(methodOverride("_method"))		// PUT, DELETE 
 
 //	MONGOOSE /MODEL CONFIG
 mongoose.connect("mongodb://localhost/restful_blog_app");
@@ -78,7 +82,13 @@ app.get("/blogs/:id/edit", function(req, res){
 //====================================================
 //UPDATE ROUTE 	(put request)
 app.put("/blogs/:id", function(req, res){
-	res.send("UPDATE");
+	Blog.findByIdAndUpdate(req.params.id,  req.body.blog, function(err, updatedBlog){
+		if(err){
+			res.redirect("/blogs");
+		}	else{
+			res.redirect("/blogs/" + req.params.id);
+		}
+	})	//Blog.findByIdAndUpdate() takes in 3 parameters (id, newData, callback)
 });
 
 
