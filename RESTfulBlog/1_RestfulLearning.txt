@@ -19,3 +19,7 @@ npm install express mongoose body-parser ejs --save
 
 =================get and post method==============to create a new post=========
 -> new template -> through get method -> it contains form through which all blog details are submitted and stored using POST method on clicking submit method
+
+====================================================================
+-> edit page -> get method -> get the data and show it in the form
+method overridding -> post method overridded as PUT -> npm install method-override --save

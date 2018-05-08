@@ -36,12 +36,12 @@ app.get("/blogs", function(req, res){
 	});
 }); 
 //===================================================
-//	NEW ROUTE
+//	NEW ROUTE 	(get request)
 app.get("/blogs/new", function(req, res){
 	res.render("new");
 }); 
  
-//	CREATE ROUTE
+//	CREATE ROUTE 	(post request)
 app.post("/blogs",function(req, res){
 	//	create blog
 	Blog.create(req.body.blog, function(err, newBlog){	//.blog contains all title, image, body since name specified  in form in that manner
@@ -65,6 +65,23 @@ app.get("/blogs/:id", function(req, res){
 	})
 });
 //===================================================
+//EDIT ROUTE
+app.get("/blogs/:id/edit", function(req, res){
+	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err){
+			res.redirect("/blogs");
+		}	else {
+			res.render("edit", {blog: foundBlog}); 
+		}
+	});
+});
+//====================================================
+//UPDATE ROUTE 	(put request)
+app.put("/blogs/:id", function(req, res){
+	res.send("UPDATE");
+});
+
+
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
 	console.log("Server is running!!");
