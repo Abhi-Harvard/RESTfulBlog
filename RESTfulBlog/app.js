@@ -1,9 +1,10 @@
 //including the dependencies
 var bodyParser 	= require("body-parser"),
 methodOverride	= require("method-override"),
-express = require('express'),
-mongoose 	= require("mongoose"),
-app 		= express();
+express 		= require('express'),
+expressSanitizer= require("express-sanitizer"),	//doesn't allow user to enter harmful scripts
+mongoose 		= require("mongoose"),
+app 			= express();
 
 
 //=================tell the app to use the following==============
@@ -11,6 +12,7 @@ app.set("view engine","ejs");
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(expressSanitizer());
 app.use(methodOverride("_method"))		// PUT, DELETE 
 
 //	MONGOOSE /MODEL CONFIG
@@ -82,6 +84,7 @@ app.get("/blogs/:id/edit", function(req, res){
 //====================================================
 //UPDATE ROUTE 	(put request)
 app.put("/blogs/:id", function(req, res){
+	req.body.blog.body = req.sanitize(req.body.blog.body) //act as a middleware
 	Blog.findByIdAndUpdate(req.params.id,  req.body.blog, function(err, updatedBlog){
 		if(err){
 			res.redirect("/blogs");
@@ -104,7 +107,7 @@ app.delete("/blogs/:id", function(req, res){
 	})
 	//redirect somewhere
 });
-
+ 
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
 	console.log("Server is running!!");
