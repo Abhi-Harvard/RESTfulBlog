@@ -91,6 +91,19 @@ app.put("/blogs/:id", function(req, res){
 	})	//Blog.findByIdAndUpdate() takes in 3 parameters (id, newData, callback)
 });
 
+//======================================================
+//DELETE ROUTE 
+app.delete("/blogs/:id", function(req, res){
+	//destroy blog
+	Blog.findByIdAndRemove(req.params.id, function(err){
+		if(err){
+			res.redirect("/blogs");
+		}	else{
+			res.redirect("/blogs");
+		}
+	})
+	//redirect somewhere
+});
 
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
