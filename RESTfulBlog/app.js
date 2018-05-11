@@ -4,7 +4,11 @@ methodOverride	= require("method-override"),
 express 		= require('express'),
 expressSanitizer= require("express-sanitizer"),	//doesn't allow user to enter harmful scripts
 mongoose 		= require("mongoose"),
+passport 		= require("passport");
+LocalStrategy	= require("passport-local"),
+User 			= require("./models/user"),
 app 			= express();
+
 
 
 //=================tell the app to use the following==============
@@ -24,6 +28,19 @@ var blogSchema = new mongoose.Schema({
 	created: { type: Date, default: Date.now}
 });
 var Blog = mongoose.model("Blog", blogSchema);
+
+//===================================================
+//	PASSPORT CONFIGURATION
+app.use(require("express-session")({
+	secret: "Rusty wins",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //	RESTful Routes
 app.get("/", function(req, res){
@@ -108,6 +125,43 @@ app.delete("/blogs/:id", function(req, res){
 	//redirect somewhere
 });
  
+//=====================================================
+//AUTH ROUTES
+
+//show register form
+app.get("/register", function(req, res){
+	res.render("register");
+});
+
+// handle sign up logic
+app.post("/register", function(req, res){
+	var newUser = new User({username: req.body.username})
+	User.register(newUser, req.body.password, function(err, user){
+		if(err){
+			console.log(err);
+			return res.render("register");
+		}
+		passport.authenticate("local")(req, res, function(){
+			res.redirect("/blogs");
+		});
+	});
+});
+
+// show login form
+app.get("/login", function(req, res){
+	res.render("login");
+});
+
+// handle login up logic
+// app.post("/login", middleware, callback)
+app.post("/login", passport.authenticate("local", 
+		{
+			successRedirect: "/blogs",
+			failureRedirect: "/login"
+		}), function(req, res){
+	res.send("Logged in");
+});
+
 
 app.listen(process.env.PORT || 3000, process.env.IP, function(){
 	console.log("Server is running!!");
