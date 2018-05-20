@@ -25,3 +25,9 @@ npm install express mongoose body-parser ejs --save
 method overridding -> post method overridded as PUT -> npm install method-override --save
 
 -> findByIdAndUpdate -> gets the page and updates the data in the database using the put request by changing wrt to the id
+
+=======================================================================
+ADDING AUTHENTICATION THROUGH PASSPORT PACKAGE
+npm install passport passport-local passport-local-mongoose express-session --save
+
+using above packages login and sign up were implemented
