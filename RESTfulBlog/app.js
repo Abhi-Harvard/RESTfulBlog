@@ -7,8 +7,10 @@ mongoose 		= require("mongoose"),
 passport 		= require("passport");
 LocalStrategy	= require("passport-local"),
 User 			= require("./models/user"),
+//ckeditor		= require("ckeditor5-build-[name]"),
 app 			= express();
 
+//const ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
 
 
 //=================tell the app to use the following==============
